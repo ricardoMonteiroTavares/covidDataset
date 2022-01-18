@@ -1,3 +1,4 @@
+import 'package:brasil_data/core/validators/form_validator.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
@@ -16,12 +17,14 @@ class LoginPage extends StatelessWidget {
               icon: Icon(Icons.alternate_email),
               labelText: "E-mail",
             ),
+            validator: FormValidator.validateEmail,
           ),
           TextFormField(
             decoration: const InputDecoration(
               icon: Icon(Icons.password),
               labelText: "Senha",
             ),
+            validator: FormValidator.validatePassword,
           ),
           ElevatedButton(
             child: const Text("Entrar"),
