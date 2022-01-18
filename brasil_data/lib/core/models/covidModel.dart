@@ -13,4 +13,12 @@ class CovidModel {
     this.cityIbgeCode,
     this.page = 1,
   });
+
+  @override
+  String toString() {
+    const String empty = '';
+    String _cityCode = cityIbgeCode == null ? '' : cityIbgeCode.toString();
+    String _isLast = isLast ? "True" : "False";
+    return "?city_ibge_code=$_cityCode&date=${date ?? empty}&is_last=$_isLast&page=${page.toString()}&place_type=state&search=&state=${state ?? empty}";
+  }
 }
