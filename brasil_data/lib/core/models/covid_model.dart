@@ -1,4 +1,4 @@
-/// Modelo para representar os parâmetros para a busca de informações
+/// Modelo que representa os parâmetros para a busca de informações
 class CovidModel {
   String? state;
   String? date;

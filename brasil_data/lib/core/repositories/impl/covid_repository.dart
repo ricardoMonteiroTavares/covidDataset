@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:brasil_data/core/models/covidModel.dart';
+import 'package:brasil_data/core/models/covid_model.dart';
 import 'package:brasil_data/core/repositories/interface/repository.dart';
 import 'package:http/http.dart' as http;
 
