@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:brasil_data/core/exceptions/not_found_exception.dart';
+import 'package:brasil_data/core/exceptions/exceptions.dart';
 import 'package:brasil_data/core/models/covid_model.dart';
 import 'package:brasil_data/core/repositories/interface/repository.dart';
 import 'package:http/http.dart' as http;
@@ -21,6 +21,9 @@ class CovidRepository implements Repository<CovidModel> {
     switch (response.statusCode) {
       case 200:
         return jsonDecode(response.body);
+      case 400:
+        throw BadRequestException(
+            Map<String, dynamic>.from(jsonDecode(response.body)).keys);
       case 404:
         throw NotFoundException();
       default:

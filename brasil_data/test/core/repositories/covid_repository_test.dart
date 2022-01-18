@@ -1,4 +1,4 @@
-import 'package:brasil_data/core/exceptions/not_found_exception.dart';
+import 'package:brasil_data/core/exceptions/exceptions.dart';
 import 'package:brasil_data/core/models/covid_model.dart';
 import 'package:brasil_data/core/repositories/impl/covid_repository.dart';
 import 'package:test/test.dart';
@@ -14,28 +14,22 @@ void main() {
       expect(response["previous"], equals(null));
     });
 
-    test("2- Página inválida", () async {
+    test("2- Página inválida", () {
       modelTest.page = 2;
       expect(() async => await repository.get(modelTest),
           throwsA(isA<NotFoundException>()));
     });
     modelTest.page = 1;
-    test("3- UF inválido", () async {
+    test("3- UF inválido", () {
       modelTest.state = "RP";
-      Map<String, dynamic> response = await repository.get(modelTest);
-      expect(
-          response["state"][0],
-          equals(
-              "Faça uma escolha válida. RP não é uma das escolhas disponíveis."));
+      expect(() async => await repository.get(modelTest),
+          throwsA(isA<BadRequestException>()));
     });
     modelTest.state = "RJ";
-    test("4- Data inválida", () async {
+    test("4- Data inválida", () {
       modelTest.date = "RP";
-      Map<String, dynamic> response = await repository.get(modelTest);
-      expect(
-          response["date"][0],
-          equals(
-              "Faça uma escolha válida. RP não é uma das escolhas disponíveis."));
+      expect(() async => await repository.get(modelTest),
+          throwsA(isA<BadRequestException>()));
     });
     modelTest.date = "2022-01-16";
     test("5- Data válida, porém o último valor está como verdadeiro", () async {
