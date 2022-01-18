@@ -1,4 +1,4 @@
-import 'package:brasil_data/core/models/loginModel.dart';
+import 'package:brasil_data/core/models/login_model.dart';
 import 'package:brasil_data/core/repositories/interface/repository.dart';
 
 /// Repositório que busca os dados dos usuários
