@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:brasil_data/core/exceptions/not_found_exception.dart';
 import 'package:brasil_data/core/models/covid_model.dart';
 import 'package:brasil_data/core/repositories/interface/repository.dart';
 import 'package:http/http.dart' as http;
@@ -17,10 +18,13 @@ class CovidRepository implements Repository<CovidModel> {
       "Authorization": "Token 8b34c604f8c467c5950550f6870bde20dc5229fb"
     });
 
-    if (response.statusCode == 200) {
-      return jsonDecode(response.body);
-    } else {
-      throw Exception("Error: Falha na busca dos dados");
+    switch (response.statusCode) {
+      case 200:
+        return jsonDecode(response.body);
+      case 404:
+        throw NotFoundException();
+      default:
+        throw Exception("Error: Falha na busca dos dados");
     }
   }
 }
