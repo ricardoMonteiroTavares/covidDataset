@@ -11,7 +11,10 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _bloc = LoginPageBloc();
-
+  final _width = 500.0;
+  final _space = const SizedBox(
+    height: 15,
+  );
   @override
   void dispose() {
     _bloc.closeStream();
@@ -23,38 +26,51 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: StreamBuilder(
         stream: _bloc.stream,
-        builder: (context, snapshot) => Form(
-          key: _bloc.formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextFormField(
-                decoration: const InputDecoration(
-                  icon: Icon(Icons.alternate_email),
-                  labelText: "E-mail",
-                ),
-                onChanged: _bloc.setEmail,
-                validator: FormValidator.validateEmail,
-              ),
-              TextFormField(
-                decoration: InputDecoration(
-                  icon: const Icon(Icons.password),
-                  labelText: "Senha",
-                  suffixIcon: IconButton(
-                    icon: _bloc.icon,
-                    onPressed: _bloc.toggleHandler,
+        builder: (context, snapshot) => Center(
+          child: Form(
+            key: _bloc.formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  constraints: BoxConstraints(maxWidth: _width),
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                      icon: Icon(Icons.alternate_email),
+                      labelText: "E-mail",
+                    ),
+                    onChanged: _bloc.setEmail,
+                    validator: FormValidator.validateEmail,
                   ),
                 ),
-                obscureText: _bloc.obscureText,
-                onChanged: _bloc.setPassword,
-                validator: FormValidator.validatePassword,
-              ),
-              ElevatedButton(
-                child: const Text("Entrar"),
-                onPressed: _bloc.signInHandler,
-              )
-            ],
+                _space,
+                Container(
+                  constraints: BoxConstraints(maxWidth: _width),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      icon: const Icon(Icons.password),
+                      labelText: "Senha",
+                      suffixIcon: IconButton(
+                        icon: _bloc.icon,
+                        onPressed: _bloc.toggleHandler,
+                      ),
+                    ),
+                    obscureText: _bloc.obscureText,
+                    onChanged: _bloc.setPassword,
+                    validator: FormValidator.validatePassword,
+                  ),
+                ),
+                _space,
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: Size(_width, 40),
+                  ),
+                  child: const Text("Entrar"),
+                  onPressed: _bloc.signInHandler,
+                )
+              ],
+            ),
           ),
         ),
       ),
