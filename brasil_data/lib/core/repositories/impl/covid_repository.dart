@@ -1,14 +1,14 @@
 import 'dart:convert';
 
 import 'package:brasil_data/core/exceptions/internet_exceptions.dart';
-import 'package:brasil_data/core/models/covid_model.dart';
+import 'package:brasil_data/core/models/covid_input_model.dart';
 import 'package:brasil_data/core/repositories/interface/repository.dart';
 import 'package:http/http.dart' as http;
 
 /// Repositório que busca os dados da Covid-19 no Brasil
-class CovidRepository implements Repository<CovidModel> {
+class CovidRepository implements Repository<CovidInputModel> {
   @override
-  Future<dynamic> get(CovidModel data) async {
+  Future<dynamic> get(CovidInputModel data) async {
     const String baseUrl =
         "https://api.brasil.io/v1/dataset/covid19/caso/data/";
 
