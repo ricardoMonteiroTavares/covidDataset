@@ -1,36 +1,62 @@
 import 'package:brasil_data/core/validators/form_validator.dart';
+import 'package:brasil_data/pages/login_page/bloc/login_page_bloc.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
-  LoginPage({Key? key}) : super(key: key);
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
 
-  final _formKey = GlobalKey<FormState>();
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final _bloc = LoginPageBloc();
+
+  @override
+  void dispose() {
+    _bloc.closeStream();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: Column(
-        children: [
-          TextFormField(
-            decoration: const InputDecoration(
-              icon: Icon(Icons.alternate_email),
-              labelText: "E-mail",
-            ),
-            validator: FormValidator.validateEmail,
+    return Scaffold(
+      body: StreamBuilder(
+        stream: _bloc.stream,
+        builder: (context, snapshot) => Form(
+          key: _bloc.formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextFormField(
+                decoration: const InputDecoration(
+                  icon: Icon(Icons.alternate_email),
+                  labelText: "E-mail",
+                ),
+                onChanged: _bloc.setEmail,
+                validator: FormValidator.validateEmail,
+              ),
+              TextFormField(
+                decoration: InputDecoration(
+                  icon: const Icon(Icons.password),
+                  labelText: "Senha",
+                  suffixIcon: IconButton(
+                    icon: _bloc.icon,
+                    onPressed: _bloc.toggleHandler,
+                  ),
+                ),
+                obscureText: _bloc.obscureText,
+                onChanged: _bloc.setPassword,
+                validator: FormValidator.validatePassword,
+              ),
+              ElevatedButton(
+                child: const Text("Entrar"),
+                onPressed: _bloc.signInHandler,
+              )
+            ],
           ),
-          TextFormField(
-            decoration: const InputDecoration(
-              icon: Icon(Icons.password),
-              labelText: "Senha",
-            ),
-            validator: FormValidator.validatePassword,
-          ),
-          ElevatedButton(
-            child: const Text("Entrar"),
-            onPressed: () {},
-          )
-        ],
+        ),
       ),
     );
   }
