@@ -1,4 +1,5 @@
 import 'package:brasil_data/core/validators/form_validator.dart';
+import 'package:brasil_data/core/widgets/alert_error_widget.dart';
 import 'package:brasil_data/pages/login_page/bloc/login_page_bloc.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _bloc = LoginPageBloc();
-  final _width = 500.0;
+  final _width = 500.0, _height = 40.0;
   final _space = const SizedBox(
     height: 15,
   );
@@ -33,6 +34,12 @@ class _LoginPageState extends State<LoginPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                AlertErrorWidget(
+                  msg: _bloc.errorMsg,
+                  maxWidth: _width,
+                  minHeight: _height,
+                ),
+                _space,
                 Container(
                   constraints: BoxConstraints(maxWidth: _width),
                   child: TextFormField(
@@ -64,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
                 _space,
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    minimumSize: Size(_width, 40),
+                    minimumSize: Size(_width, _height),
                   ),
                   child: const Text("Entrar"),
                   onPressed: _bloc.signInHandler,
