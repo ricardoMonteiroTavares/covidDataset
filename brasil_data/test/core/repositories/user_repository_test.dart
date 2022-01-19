@@ -17,8 +17,8 @@ void main() {
       model.email = "abcd";
       expect(() async => await repository.get(model),
           throwsA(isA<InvalidEmailException>()));
+      model.email = "admin@brasildata.com";
     });
-    model.email = "admin@brasildata.com";
     test("Senha incorreta", () {
       model.password = "fkgd";
       expect(() async => await repository.get(model),
