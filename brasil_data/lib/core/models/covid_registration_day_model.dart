@@ -2,7 +2,8 @@ import 'package:brasil_data/core/models/model.dart';
 
 /// Classe que representa os casos e mortes de COVID-19 em um dia
 class CovidRegistrationDayModel extends Model {
-  late String city, date, placeType, state;
+  late String? city;
+  late String date, placeType, state;
   late num cityIbgeCode,
       confirmed,
       confirmedPer100kInhabitants,
@@ -18,7 +19,7 @@ class CovidRegistrationDayModel extends Model {
     state = json['state'];
     date = json['date'];
     placeType = json['place_type'];
-    cityIbgeCode = json['city_ibge_code'];
+    cityIbgeCode = int.parse(json['city_ibge_code']);
     confirmed = json['confirmed'];
     confirmedPer100kInhabitants = json['confirmed_per_100k_inhabitants'];
     deaths = json['deaths'];

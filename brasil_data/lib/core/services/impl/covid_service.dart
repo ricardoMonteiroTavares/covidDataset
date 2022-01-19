@@ -10,7 +10,8 @@ class CovidService implements Service<CovidInputModel, CovidResponseModel> {
   @override
   Future<Or<CovidResponseModel, String>> action(CovidInputModel data) async {
     try {
-      Map<String, dynamic> json = await repository.get(data);
+      Map<String, dynamic> json =
+          Map<String, dynamic>.from(await repository.get(data));
       return Or<CovidResponseModel, String>(CovidResponseModel.fromJson(json));
     } catch (e) {
       return Or<CovidResponseModel, String>(e.toString());

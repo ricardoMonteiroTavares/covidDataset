@@ -13,7 +13,7 @@ void main() {
     CovidService service = CovidService();
     test("1- Buscando dados corretamente", () async {
       Or<CovidResponseModel, String> response = await service.action(modelTest);
-      expect(response.type, equals(isA<CovidResponseModel>()));
+      expect(response.type, equals(CovidResponseModel));
 
       CovidResponseModel val = response.value;
       expect(val.count, equals(1));
@@ -22,7 +22,8 @@ void main() {
       expect(val.prev, equals(null));
 
       CovidRegistrationDayModel reg = val.results[0];
-      expect(reg.city, equals("RJ"));
+      expect(reg.city, equals(null));
+      expect(reg.state, equals("RJ"));
       expect(reg.date, equals("2022-01-16"));
       expect(reg.isLast, equals(false));
       expect(reg.cityIbgeCode, equals(33));
@@ -38,32 +39,32 @@ void main() {
     test("2- Página inválida", () async {
       modelTest.page = 2;
       Or<CovidResponseModel, String> response = await service.action(modelTest);
-      expect(response.type, equals(isA<String>()));
+      expect(response.type, equals(String));
       String val = response.value;
       expect(val, equals(NotFoundException().toString()));
+      modelTest.page = 1;
     });
-    modelTest.page = 1;
     test("3- UF inválido", () async {
       modelTest.state = "RP";
       Or<CovidResponseModel, String> response = await service.action(modelTest);
-      expect(response.type, equals(isA<String>()));
+      expect(response.type, equals(String));
       String val = response.value;
       expect(val, equals(BadRequestException(["state"]).toString()));
+      modelTest.state = "RJ";
     });
-    modelTest.state = "RJ";
     test("4- Data inválida", () async {
       modelTest.date = "RP";
       Or<CovidResponseModel, String> response = await service.action(modelTest);
-      expect(response.type, equals(isA<String>()));
+      expect(response.type, equals(String));
       String val = response.value;
       expect(val, equals(BadRequestException(["date"]).toString()));
     });
-    modelTest.date = "2022-01-16";
+
     test("5- Data válida, porém o último valor está como verdadeiro", () async {
       modelTest.date = "2022-01-15";
       modelTest.isLast = true;
       Or<CovidResponseModel, String> response = await service.action(modelTest);
-      expect(response.type, equals(isA<CovidResponseModel>()));
+      expect(response.type, equals(CovidResponseModel));
 
       CovidResponseModel val = response.value;
       expect(val.count, equals(0));
