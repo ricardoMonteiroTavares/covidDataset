@@ -1,11 +1,12 @@
 import 'package:brasil_data/core/exceptions/internet_exceptions.dart';
-import 'package:brasil_data/core/models/covid_model.dart';
+import 'package:brasil_data/core/models/covid_input_model.dart';
 import 'package:brasil_data/core/repositories/impl/covid_repository.dart';
 import 'package:test/test.dart';
 
 void main() {
   group("CovidRepository: ", () {
-    CovidModel modelTest = CovidModel(date: "2022-01-16", state: "RJ");
+    CovidInputModel modelTest =
+        CovidInputModel(date: "2022-01-16", state: "RJ");
     CovidRepository repository = CovidRepository();
     test("1- Buscando dados corretamente", () async {
       Map<String, dynamic> response = await repository.get(modelTest);
