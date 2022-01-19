@@ -12,7 +12,7 @@ void main() {
         LoginModel(email: "admin@brasildata.com", password: "admin1234");
     test("Dados válidos", () async {
       Or<UserModel, String> response = await service.action(model);
-      expect(response.type, equals(isA<UserModel>()));
+      expect(response.type, equals(UserModel));
 
       UserModel val = response.value;
       expect(val.name, equals("Administrador"));
@@ -21,16 +21,16 @@ void main() {
     test("E-mail inválido", () async {
       model.email = "abcd";
       Or<UserModel, String> response = await service.action(model);
-      expect(response.type, equals(isA<String>()));
+      expect(response.type, equals(String));
 
       String val = response.value;
       expect(val, equals(InvalidEmailException().toString()));
     });
-    model.email = "admin@brasildata.com";
     test("Senha incorreta", () async {
+      model.email = "admin@brasildata.com";
       model.password = "fkgd";
       Or<UserModel, String> response = await service.action(model);
-      expect(response.type, equals(isA<String>()));
+      expect(response.type, equals(String));
 
       String val = response.value;
       expect(val, equals(IncorrectPasswordException().toString()));

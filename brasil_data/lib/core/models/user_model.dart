@@ -4,7 +4,7 @@ class UserModel extends OutputModel {
   late String? email, name;
 
   UserModel.fromJson(Map<String, dynamic> json) {
-    email = json["user"];
-    name = json["e-mail"];
+    name = json["user"];
+    email = json["e-mail"];
   }
 }
