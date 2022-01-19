@@ -1,5 +1,7 @@
+import 'package:brasil_data/core/models/model.dart';
+
 /// Modelo que representa os parâmetros para a busca de informações
-class CovidModel {
+class CovidModel extends InputModel {
   String? state;
   String? date;
   late bool isLast;
