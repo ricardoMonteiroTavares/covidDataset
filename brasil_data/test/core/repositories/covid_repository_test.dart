@@ -1,4 +1,4 @@
-import 'package:brasil_data/core/exceptions/exceptions.dart';
+import 'package:brasil_data/core/exceptions/internet_exceptions.dart';
 import 'package:brasil_data/core/models/covid_model.dart';
 import 'package:brasil_data/core/repositories/impl/covid_repository.dart';
 import 'package:test/test.dart';

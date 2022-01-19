@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:brasil_data/core/exceptions/exceptions.dart';
+import 'package:brasil_data/core/exceptions/internet_exceptions.dart';
 import 'package:brasil_data/core/models/covid_model.dart';
 import 'package:brasil_data/core/repositories/interface/repository.dart';
 import 'package:http/http.dart' as http;
@@ -27,7 +27,7 @@ class CovidRepository implements Repository<CovidModel> {
       case 404:
         throw NotFoundException();
       default:
-        throw Exception("Error: Falha na busca dos dados");
+        throw Exception("Falha na busca dos dados");
     }
   }
 }
