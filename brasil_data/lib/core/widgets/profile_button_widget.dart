@@ -1,31 +1,42 @@
 import 'package:brasil_data/core/models/user_model.dart';
 import 'package:brasil_data/core/routes/app_routes.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class ProfileButtonWidget extends StatelessWidget {
   final UserModel user;
   const ProfileButtonWidget({Key? key, required this.user}) : super(key: key);
 
+  Column getUserColumn(UserModel user) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            user.name ?? '',
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          Text(user.email ?? '')
+        ],
+      );
+
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton(
       offset: const Offset(0, kToolbarHeight),
       child: ConstrainedBox(
-        constraints:
-            const BoxConstraints(maxWidth: 250, maxHeight: kToolbarHeight),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const SizedBox(width: 5),
-            const Icon(Icons.person),
-            const SizedBox(width: 10),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [Text(user.name ?? ''), Text(user.email ?? '')],
-            ),
-          ],
-        ),
+        constraints: const BoxConstraints(
+            minWidth: 50, maxWidth: 250, maxHeight: kToolbarHeight),
+        child: (kIsWeb)
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const SizedBox(width: 5),
+                  const Icon(Icons.person),
+                  const SizedBox(width: 10),
+                  getUserColumn(user)
+                ],
+              )
+            : const Icon(Icons.person),
       ),
       onSelected: (value) {
         if (value == 0) {
@@ -33,14 +44,28 @@ class ProfileButtonWidget extends StatelessWidget {
               context, AppRoutes.login, (route) => false);
         }
       },
-      itemBuilder: (context) => [
-        const PopupMenuItem(
-          value: 0,
-          child: Text(
-            "Sair",
-          ),
-        ),
-      ],
+      itemBuilder: (context) {
+        List<PopupMenuEntry> list = [
+          const PopupMenuItem(
+            value: 0,
+            child: Text(
+              "Sair",
+            ),
+          )
+        ];
+        if (!kIsWeb) {
+          list.insertAll(0, [
+            PopupMenuItem(
+              value: -1,
+              child: getUserColumn(user),
+            ),
+            const PopupMenuDivider(
+              height: 10,
+            ),
+          ]);
+        }
+        return list;
+      },
     );
   }
 }

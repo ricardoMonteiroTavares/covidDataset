@@ -36,6 +36,9 @@ class CovidDataPageBloc extends Bloc {
   String _totalPer100k(FieldEnum field) {
     int population = _total(FieldEnum.population);
     int value = _total(field);
+    if (population == 0) {
+      return "0";
+    }
     return ((value / population) * 10e4).round().toString();
   }
 
