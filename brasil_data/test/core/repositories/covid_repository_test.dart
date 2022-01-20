@@ -6,7 +6,7 @@ import 'package:test/test.dart';
 void main() {
   group("CovidRepository: ", () {
     CovidInputModel modelTest =
-        CovidInputModel(date: "2022-01-16", state: "RJ");
+        CovidInputModel(date: "2022-01-16", state: "RJ", isLast: false);
     CovidRepository repository = CovidRepository();
     test("1- Buscando dados corretamente", () async {
       Map<String, dynamic> response = await repository.get(modelTest);

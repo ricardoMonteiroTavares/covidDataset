@@ -23,6 +23,12 @@ class _CovidDataPageState extends State<CovidDataPage> {
   }
 
   @override
+  void initState() {
+    _bloc.fetchData();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final double aspectRatio =
         calculateAspectRatio(MediaQuery.of(context).size);
@@ -126,13 +132,13 @@ class _CovidDataPageState extends State<CovidDataPage> {
                 children: [
                   DataCardWidget(
                     title: "Total de Casos",
-                    value: "XXX.XXX",
+                    value: _bloc.totalCases.toString(),
                     aspectRatio: aspectRatio,
                     color: Colors.orange.shade700,
                   ),
                   DataCardWidget(
                     title: "Total de Mortes",
-                    value: "XXX.XXX",
+                    value: _bloc.totalDepths.toString(),
                     aspectRatio: aspectRatio,
                     color: Colors.red.shade800,
                   ),
