@@ -27,56 +27,59 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: StreamBuilder(
         stream: _bloc.stream,
-        builder: (context, snapshot) => Center(
-          child: Form(
-            key: _bloc.formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                AlertErrorWidget(
-                  msg: _bloc.errorMsg,
-                  maxWidth: _width,
-                  minHeight: _height,
-                ),
-                _space,
-                Container(
-                  constraints: BoxConstraints(maxWidth: _width),
-                  child: TextFormField(
-                    decoration: const InputDecoration(
-                      icon: Icon(Icons.alternate_email),
-                      labelText: "E-mail",
-                    ),
-                    onChanged: _bloc.setEmail,
-                    validator: FormValidator.validateEmail,
+        builder: (context, snapshot) => Container(
+          padding: const EdgeInsets.all(20),
+          child: Center(
+            child: Form(
+              key: _bloc.formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  AlertErrorWidget(
+                    msg: _bloc.errorMsg,
+                    maxWidth: _width,
+                    minHeight: _height,
                   ),
-                ),
-                _space,
-                Container(
-                  constraints: BoxConstraints(maxWidth: _width),
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      icon: const Icon(Icons.password),
-                      labelText: "Senha",
-                      suffixIcon: IconButton(
-                        icon: _bloc.icon,
-                        onPressed: _bloc.toggleHandler,
+                  _space,
+                  Container(
+                    constraints: BoxConstraints(maxWidth: _width),
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        icon: Icon(Icons.alternate_email),
+                        labelText: "E-mail",
                       ),
+                      onChanged: _bloc.setEmail,
+                      validator: FormValidator.validateEmail,
                     ),
-                    obscureText: _bloc.obscureText,
-                    onChanged: _bloc.setPassword,
-                    validator: FormValidator.validatePassword,
                   ),
-                ),
-                _space,
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: Size(_width, _height),
+                  _space,
+                  Container(
+                    constraints: BoxConstraints(maxWidth: _width),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        icon: const Icon(Icons.password),
+                        labelText: "Senha",
+                        suffixIcon: IconButton(
+                          icon: _bloc.icon,
+                          onPressed: _bloc.toggleHandler,
+                        ),
+                      ),
+                      obscureText: _bloc.obscureText,
+                      onChanged: _bloc.setPassword,
+                      validator: FormValidator.validatePassword,
+                    ),
                   ),
-                  child: const Text("Entrar"),
-                  onPressed: () => _bloc.signInHandler(context),
-                )
-              ],
+                  _space,
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: Size(_width, _height),
+                    ),
+                    child: const Text("Entrar"),
+                    onPressed: () => _bloc.signInHandler(context),
+                  )
+                ],
+              ),
             ),
           ),
         ),

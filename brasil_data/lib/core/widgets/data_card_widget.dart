@@ -22,7 +22,9 @@ class DataCardWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
-              children: [Text(title, style: TextStyle(color: color))],
+              children: [
+                Text(title, style: TextStyle(fontSize: 17, color: color))
+              ],
             ),
             Text(
               value ?? '',
