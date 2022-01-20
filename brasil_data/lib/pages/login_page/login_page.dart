@@ -74,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                     minimumSize: Size(_width, _height),
                   ),
                   child: const Text("Entrar"),
-                  onPressed: _bloc.signInHandler,
+                  onPressed: () => _bloc.signInHandler(context),
                 )
               ],
             ),
