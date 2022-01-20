@@ -6,7 +6,8 @@ import 'package:brasil_data/pages/covid_data_page/bloc/covid_data_page_bloc.dart
 import 'package:flutter/material.dart';
 
 class CovidDataPage extends StatefulWidget {
-  const CovidDataPage({Key? key}) : super(key: key);
+  final UserModel user;
+  const CovidDataPage({Key? key, required this.user}) : super(key: key);
 
   @override
   _CovidDataPageState createState() => _CovidDataPageState();
@@ -33,9 +34,8 @@ class _CovidDataPageState extends State<CovidDataPage> {
           title: Text(
               "Painel Covid - ${(_bloc.state == null || _bloc.state!.isEmpty) ? "Brasil" : _bloc.state}"),
           actions: [
-            // TODO: Pegar os dados do usuário
             ProfileButtonWidget(
-              user: UserModel("email@email.com", "Administrador"),
+              user: widget.user,
             )
           ],
         ),

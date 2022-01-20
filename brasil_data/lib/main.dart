@@ -1,4 +1,5 @@
-import 'package:brasil_data/pages/login_page/login_page.dart';
+import 'package:brasil_data/core/routes/app_routes.dart';
+import 'package:brasil_data/core/routes/route_generator.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -25,7 +26,8 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: LoginPage(),
+      initialRoute: AppRoutes.login,
+      onGenerateRoute: RouteGenerator.generateRoute,
     );
   }
 }
