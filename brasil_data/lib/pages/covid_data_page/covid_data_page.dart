@@ -1,4 +1,5 @@
 import 'package:brasil_data/core/util/states.dart';
+import 'package:brasil_data/core/widgets/data_card_widget.dart';
 import 'package:brasil_data/pages/covid_data_page/bloc/covid_data_page_bloc.dart';
 import 'package:flutter/material.dart';
 
@@ -14,96 +15,111 @@ class _CovidDataPageState extends State<CovidDataPage> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+
+    /*24 is for notification bar on Android*/
+    final double itemHeight = (size.height - kToolbarHeight - 24) / 2;
+    final double itemWidth = size.width / 2;
+    final double aspectRatio = (itemWidth / itemHeight);
     return Scaffold(
-      body: Row(
-        children: [
-          Flexible(
-            flex: 1,
-            child: Column(
-              children: [
-                Row(
+      body: StreamBuilder(
+        stream: _bloc.stream,
+        builder: (context, snapshot) => Row(
+          children: [
+            Flexible(
+              flex: 1,
+              child: Container(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Estado: "),
-                    DropdownButton<String>(
-                      value: _bloc.state,
-                      icon: const Icon(Icons.arrow_drop_down),
-                      elevation: 16,
-                      style: const TextStyle(color: Colors.deepPurple),
-                      underline: Container(
-                        height: 2,
-                        color: Colors.deepPurpleAccent,
-                      ),
-                      onChanged: _bloc.setState,
-                      items:
-                          states.map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
+                    const Text(
+                      "Filtros:",
+                      style: TextStyle(
+                          color: Colors.black54,
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Row(
+                      children: [
+                        const Text("UF: "),
+                        DropdownButton<String>(
+                          value: _bloc.state,
+                          icon: const Icon(Icons.arrow_drop_down),
+                          elevation: 16,
+                          menuMaxHeight: 300,
+                          onChanged: _bloc.setState,
+                          items: states
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        const Text("Data: "),
+                        Container(
+                          constraints: const BoxConstraints(
+                              minWidth: 200, minHeight: 30),
+                          decoration: const BoxDecoration(
+                            border: Border(
+                              bottom:
+                                  BorderSide(width: 0.2, color: Colors.black),
+                            ),
+                          ),
+                          child: Text(_bloc.date),
+                        )
+                      ],
                     ),
                   ],
                 ),
-                Row(
-                  children: [
-                    const Text("Data: "),
-                    Container(
-                      decoration: const BoxDecoration(
-                        color: Colors.black87,
-                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                        border: Border(
-                          top: BorderSide(width: 1.0, color: Colors.black87),
-                          left: BorderSide(width: 1.0, color: Colors.black87),
-                          right: BorderSide(width: 1.0, color: Colors.black87),
-                          bottom: BorderSide(width: 1.0, color: Colors.black87),
-                        ),
-                      ),
-                      child: Text(_bloc.date),
-                    )
-                  ],
-                ),
-              ],
+              ),
             ),
-          ),
-          Flexible(
-            flex: 2,
-            child: GridView.count(
-              primary: false,
-              padding: const EdgeInsets.all(10),
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 2,
-              crossAxisCount: 2,
-              children: [
-                Card(
-                  child: Column(
-                    children: const [Text("Total de Casos"), Text("XXX.XXX")],
+            Flexible(
+              flex: 2,
+              fit: FlexFit.tight,
+              child: GridView.count(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                padding: const EdgeInsets.all(10),
+                childAspectRatio: aspectRatio,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 2,
+                crossAxisCount: 2,
+                children: [
+                  DataCardWidget(
+                    title: "Total de Casos",
+                    value: "XXX.XXX",
+                    aspectRatio: aspectRatio,
+                    color: Colors.orange.shade700,
                   ),
-                ),
-                Card(
-                  child: Column(
-                    children: const [Text("Total de Mortes"), Text("XXX.XXX")],
+                  DataCardWidget(
+                    title: "Total de Mortes",
+                    value: "XXX.XXX",
+                    aspectRatio: aspectRatio,
+                    color: Colors.red.shade800,
                   ),
-                ),
-                Card(
-                  child: Column(
-                    children: const [
-                      Text("Total de Casos em 24 horas"),
-                      Text("XXX.XXX")
-                    ],
+                  DataCardWidget(
+                    title: "Total de Casos em 24 horas",
+                    value: "XXX.XXX",
+                    aspectRatio: aspectRatio,
+                    color: Colors.amberAccent.shade700,
                   ),
-                ),
-                Card(
-                  child: Column(
-                    children: const [
-                      Text("Total de Mortes em 24 horas"),
-                      Text("XXX.XXX")
-                    ],
+                  DataCardWidget(
+                    title: "Total de Mortes em 24 horas",
+                    value: "XXX.XXX",
+                    aspectRatio: aspectRatio,
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
