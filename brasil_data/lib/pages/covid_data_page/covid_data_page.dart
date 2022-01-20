@@ -82,13 +82,13 @@ class _CovidDataPageState extends State<CovidDataPage> {
               children: [
                 DataCardWidget(
                   title: "Total de Casos:",
-                  value: _bloc.totalCases.toString(),
+                  value: _bloc.totalCases,
                   aspectRatio: aspectRatio,
                   color: Colors.orange.shade700,
                 ),
                 DataCardWidget(
                   title: "Total de Mortes:",
-                  value: _bloc.totalDepths.toString(),
+                  value: _bloc.totalDepths,
                   aspectRatio: aspectRatio,
                   color: Colors.red.shade800,
                 ),

@@ -26,26 +26,26 @@ class CovidDataPageBloc extends Bloc {
     }
   }
 
-  int get totalDepths => _total(FieldEnum.depths);
+  int? get totalDepths => _total(FieldEnum.depths);
 
-  int get totalCases => _total(FieldEnum.cases);
+  int? get totalCases => _total(FieldEnum.cases);
 
-  String get depthPer100k => _totalPer100k(FieldEnum.depths);
-  String get casesPer100k => _totalPer100k(FieldEnum.cases);
+  int? get depthPer100k => _totalPer100k(FieldEnum.depths);
+  int? get casesPer100k => _totalPer100k(FieldEnum.cases);
 
-  String _totalPer100k(FieldEnum field) {
-    int population = _total(FieldEnum.population);
-    int value = _total(field);
-    if (population == 0) {
-      return "0";
+  int? _totalPer100k(FieldEnum field) {
+    int? population = _total(FieldEnum.population);
+    int? value = _total(field);
+    if (value == null || population == null) {
+      return null;
     }
-    return ((value / population) * 10e4).round().toString();
+    return ((value / population) * 10e4).round();
   }
 
-  int _total(FieldEnum field) {
+  int? _total(FieldEnum field) {
     num result = 0;
     if (_data == null) {
-      return result.toInt();
+      return null;
     }
     if (state == null || state!.isEmpty) {
       for (var element in _data!.results) {

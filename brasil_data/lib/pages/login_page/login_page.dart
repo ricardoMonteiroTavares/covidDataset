@@ -75,7 +75,16 @@ class _LoginPageState extends State<LoginPage> {
                     style: ElevatedButton.styleFrom(
                       minimumSize: Size(_width, _height),
                     ),
-                    child: const Text("Entrar"),
+                    child: (_bloc.isLoading)
+                        ? const SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                              strokeWidth: 1,
+                            ),
+                          )
+                        : const Text("Entrar"),
                     onPressed: () => _bloc.signInHandler(context),
                   )
                 ],

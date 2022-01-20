@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 class LoginPageBloc extends Bloc<dynamic> {
   String? _email, _password, errorMsg;
   bool obscureText = true;
+  bool isLoading = false;
 
   final formKey = GlobalKey<FormState>();
   final service = LoginService();
@@ -34,6 +35,8 @@ class LoginPageBloc extends Bloc<dynamic> {
 
   signInHandler(BuildContext context) async {
     if (formKey.currentState!.validate()) {
+      isLoading = true;
+      sink.add(isLoading);
       LoginModel data = LoginModel(email: _email!, password: _password!);
       Or<UserModel, String> response = await service.action(data);
       if (response.type == UserModel) {
@@ -46,6 +49,8 @@ class LoginPageBloc extends Bloc<dynamic> {
         errorMsg = response.value;
         sink.add(errorMsg);
       }
+      isLoading = false;
+      sink.add(isLoading);
     }
   }
 }
