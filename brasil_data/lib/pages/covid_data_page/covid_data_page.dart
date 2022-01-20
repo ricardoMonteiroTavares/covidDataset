@@ -1,5 +1,7 @@
+import 'package:brasil_data/core/models/user_model.dart';
 import 'package:brasil_data/core/util/states.dart';
 import 'package:brasil_data/core/widgets/data_card_widget.dart';
+import 'package:brasil_data/core/widgets/profile_button_widget.dart';
 import 'package:brasil_data/pages/covid_data_page/bloc/covid_data_page_bloc.dart';
 import 'package:flutter/material.dart';
 
@@ -13,17 +15,31 @@ class CovidDataPage extends StatefulWidget {
 class _CovidDataPageState extends State<CovidDataPage> {
   final _bloc = CovidDataPageBloc();
 
-  @override
-  Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-
+  double calculateAspectRatio(Size size) {
     final double itemHeight = (size.height - kToolbarHeight - 24) / 2;
     final double itemWidth = size.width / 2;
-    final double aspectRatio = (itemWidth / itemHeight);
-    return Scaffold(
-      body: StreamBuilder(
-        stream: _bloc.stream,
-        builder: (context, snapshot) => Row(
+    return (itemWidth / itemHeight);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final double aspectRatio =
+        calculateAspectRatio(MediaQuery.of(context).size);
+    return StreamBuilder(
+      stream: _bloc.stream,
+      builder: (context, snapshot) => Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          title: Text(
+              "Painel Covid - ${(_bloc.state == null || _bloc.state!.isEmpty) ? "Brasil" : _bloc.state}"),
+          actions: [
+            // TODO: Pegar os dados do usuário
+            ProfileButtonWidget(
+              user: UserModel("email@email.com", "Administrador"),
+            )
+          ],
+        ),
+        body: Row(
           children: [
             Flexible(
               flex: 1,

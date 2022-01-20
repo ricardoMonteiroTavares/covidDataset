@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 
 class CovidDataPageBloc extends Bloc {
   final CovidInputModel _inputModel = CovidInputModel();
-  CovidResponseModel? _lastData;
+  CovidResponseModel? _lastData; // TODO: Buscar os dados da Covid
 
   fetchData([String? state, String? initialDate, String? finalDate]) {
     bool stateIsNull = state == null;
