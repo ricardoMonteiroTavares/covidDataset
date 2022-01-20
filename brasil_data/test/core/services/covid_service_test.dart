@@ -9,7 +9,7 @@ import 'package:test/test.dart';
 void main() {
   group("CovidService: ", () {
     CovidInputModel modelTest =
-        CovidInputModel(date: "2022-01-16", state: "RJ");
+        CovidInputModel(date: "2022-01-16", state: "RJ", isLast: false);
     CovidService service = CovidService();
     test("1- Buscando dados corretamente", () async {
       Or<CovidResponseModel, String> response = await service.action(modelTest);

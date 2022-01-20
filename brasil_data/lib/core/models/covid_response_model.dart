@@ -16,4 +16,14 @@ class CovidResponseModel extends OutputModel {
     results =
         _results.map((e) => CovidRegistrationDayModel.fromJson(e)).toList();
   }
+
+  CovidRegistrationDayModel? getDataByState(String? state) {
+    try {
+      return (state == null)
+          ? null
+          : results.firstWhere((element) => element.state == state);
+    } catch (e) {
+      return null;
+    }
+  }
 }

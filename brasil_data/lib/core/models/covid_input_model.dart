@@ -11,7 +11,7 @@ class CovidInputModel extends InputModel {
   CovidInputModel({
     this.state,
     this.date,
-    this.isLast = false,
+    this.isLast = true,
     this.cityIbgeCode,
     this.page = 1,
   });
