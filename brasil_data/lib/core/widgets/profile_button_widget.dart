@@ -1,11 +1,11 @@
 import 'package:brasil_data/core/models/user_model.dart';
+import 'package:brasil_data/core/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 
 class ProfileButtonWidget extends StatelessWidget {
   final UserModel user;
   const ProfileButtonWidget({Key? key, required this.user}) : super(key: key);
 
-  // TODO: Realizar a operação de logout
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton(
@@ -27,9 +27,15 @@ class ProfileButtonWidget extends StatelessWidget {
           ],
         ),
       ),
+      onSelected: (value) {
+        if (value == 0) {
+          Navigator.pushNamedAndRemoveUntil(
+              context, AppRoutes.login, (route) => false);
+        }
+      },
       itemBuilder: (context) => [
         const PopupMenuItem(
-          value: 1,
+          value: 0,
           child: Text(
             "Sair",
           ),
