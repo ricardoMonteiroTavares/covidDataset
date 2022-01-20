@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class DataCardWidget extends StatelessWidget {
   final String title;
-  final String? value;
+  final int? value;
   final double aspectRatio;
   final Color color;
   const DataCardWidget({
@@ -26,11 +26,15 @@ class DataCardWidget extends StatelessWidget {
                 Text(title, style: TextStyle(fontSize: 17, color: color))
               ],
             ),
-            Text(
-              value ?? '',
-              style: TextStyle(
-                  fontSize: 50, color: color, fontWeight: FontWeight.bold),
-            ),
+            (value == null)
+                ? CircularProgressIndicator(color: color)
+                : Text(
+                    value.toString(),
+                    style: TextStyle(
+                        fontSize: 50,
+                        color: color,
+                        fontWeight: FontWeight.bold),
+                  ),
             SizedBox(
               height: aspectRatio * 5,
             )
