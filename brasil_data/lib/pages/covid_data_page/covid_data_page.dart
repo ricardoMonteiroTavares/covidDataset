@@ -17,7 +17,6 @@ class _CovidDataPageState extends State<CovidDataPage> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
-    /*24 is for notification bar on Android*/
     final double itemHeight = (size.height - kToolbarHeight - 24) / 2;
     final double itemWidth = size.width / 2;
     final double aspectRatio = (itemWidth / itemHeight);
@@ -64,15 +63,32 @@ class _CovidDataPageState extends State<CovidDataPage> {
                       children: [
                         const Text("Data: "),
                         Container(
+                          padding: const EdgeInsets.only(left: 5),
                           constraints: const BoxConstraints(
-                              minWidth: 200, minHeight: 30),
+                              maxWidth: 200, maxHeight: 30),
                           decoration: const BoxDecoration(
                             border: Border(
                               bottom:
                                   BorderSide(width: 0.2, color: Colors.black),
                             ),
                           ),
-                          child: Text(_bloc.date),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(_bloc.date),
+                              IconButton(
+                                padding: EdgeInsets.zero,
+                                icon: const Icon(
+                                  Icons.calendar_today,
+                                  size: 20,
+                                  color: Colors.black54,
+                                ),
+                                onPressed: () =>
+                                    _bloc.datePickerHandler(context),
+                              )
+                            ],
+                          ),
                         )
                       ],
                     ),
