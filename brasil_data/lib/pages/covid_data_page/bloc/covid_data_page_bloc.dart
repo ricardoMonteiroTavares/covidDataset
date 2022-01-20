@@ -1,3 +1,4 @@
+import 'package:brasil_data/core/enum/field_enum.dart';
 import 'package:brasil_data/core/models/covid_input_model.dart';
 import 'package:brasil_data/core/models/covid_registration_day_model.dart';
 import 'package:brasil_data/core/models/covid_response_model.dart';
@@ -10,11 +11,10 @@ import 'package:flutter/cupertino.dart';
 class CovidDataPageBloc extends Bloc {
   final _inputModel = CovidInputModel();
   final _service = CovidService();
-  CovidResponseModel? _data; // TODO: Buscar os dados da Covid
+  CovidResponseModel? _data;
   String? _state = "";
 
   fetchData() async {
-    print("Inicio da busca");
     Or<CovidResponseModel, String> response =
         await _service.action(_inputModel);
 
@@ -24,14 +24,22 @@ class CovidDataPageBloc extends Bloc {
     } else {
       print(response.value);
     }
-    print("Final da Busca");
   }
 
-  int get totalDepths => _total("depth");
+  int get totalDepths => _total(FieldEnum.depths);
 
-  int get totalCases => _total("cases");
+  int get totalCases => _total(FieldEnum.cases);
 
-  int _total(String field) {
+  String get depthPer100k => _totalPer100k(FieldEnum.depths);
+  String get casesPer100k => _totalPer100k(FieldEnum.cases);
+
+  String _totalPer100k(FieldEnum field) {
+    int population = _total(FieldEnum.population);
+    int value = _total(field);
+    return ((value / population) * 10e4).round().toString();
+  }
+
+  int _total(FieldEnum field) {
     num result = 0;
     if (_data == null) {
       return result.toInt();
@@ -46,12 +54,15 @@ class CovidDataPageBloc extends Bloc {
     return result.toInt();
   }
 
-  num _getValueByField(CovidRegistrationDayModel? e, String field) {
+  num _getValueByField(CovidRegistrationDayModel? e, FieldEnum field) {
     if (e != null) {
-      if (field == "depth") {
-        return e.deaths;
-      } else if (field == "cases") {
-        return e.confirmed;
+      switch (field) {
+        case FieldEnum.population:
+          return e.estimatedPopulation;
+        case FieldEnum.cases:
+          return e.confirmed;
+        case FieldEnum.depths:
+          return e.deaths;
       }
     }
     return 0;

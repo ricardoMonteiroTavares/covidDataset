@@ -91,14 +91,14 @@ class _CovidDataPageState extends State<CovidDataPage> {
                   color: Colors.red.shade800,
                 ),
                 DataCardWidget(
-                  title: "Total de Casos em 24 horas",
-                  value: "XXX.XXX",
+                  title: "Casos por 100 mil habitantes",
+                  value: _bloc.casesPer100k,
                   aspectRatio: aspectRatio,
                   color: Colors.amberAccent.shade700,
                 ),
                 DataCardWidget(
-                  title: "Total de Mortes em 24 horas",
-                  value: "XXX.XXX",
+                  title: "Mortes por 100 mil habitantes",
+                  value: _bloc.depthPer100k,
                   aspectRatio: aspectRatio,
                 ),
               ],
