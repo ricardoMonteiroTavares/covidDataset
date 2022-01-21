@@ -1,10 +1,13 @@
+import 'package:brasil_data/core/exceptions/failed_exception.dart';
 import 'package:brasil_data/core/exceptions/internet_exceptions.dart';
 import 'package:brasil_data/core/models/user_model.dart';
 import 'package:brasil_data/core/repositories/interface/repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Classe que realiza a comunicação com o banco de dados local
-class LocalRepository implements Repository<UserModel> {
+class LocalRepository
+    with RemoveAllOp, SetOP<UserModel>
+    implements Repository<UserModel> {
   @override
   Future<UserModel> get([UserModel? data]) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -29,7 +32,21 @@ class LocalRepository implements Repository<UserModel> {
   }
 
   @override
-  Future<bool> remove([UserModel? data]) async {
+  Future set(UserModel data) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (!(await prefs.setString("name", data.name!))) {
+      throw FailedException();
+    }
+    if (!(await prefs.setString("email", data.email!))) {
+      throw FailedException();
+    }
+    if (!(await prefs.setString("dateTime", DateTime.now().toString()))) {
+      throw FailedException();
+    }
+  }
+
+  @override
+  Future<bool> removeAll() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     return await prefs.clear();

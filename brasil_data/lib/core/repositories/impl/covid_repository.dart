@@ -38,9 +38,4 @@ class CovidRepository implements Repository<CovidInputModel> {
       throw NoInternetException();
     }
   }
-
-  @override
-  Future remove([CovidInputModel? data]) {
-    throw UnimplementedError();
-  }
 }

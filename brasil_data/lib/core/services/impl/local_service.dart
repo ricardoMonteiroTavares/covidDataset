@@ -17,7 +17,7 @@ class LocalService implements Service<UserModel?, UserModel> {
       }
     }
 
-    bool response = await repository.remove();
+    bool response = await repository.removeAll();
     if (response) {
       return Or<UserModel, String>(data);
     } else {
