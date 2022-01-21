@@ -30,8 +30,10 @@ class _CovidDataPageState extends State<CovidDataPage> {
       builder: (context, snapshot) => Scaffold(
         appBar: AppBar(
           elevation: 0,
-          title: Text(
-              "Painel Covid - ${(_bloc.state == null || _bloc.state!.isEmpty) ? "Brasil" : _bloc.state}"),
+          title: const Text(
+            "PAINEL - DATA COVID BRASIL",
+            style: TextStyle(fontFamily: "Odibee Sans"),
+          ),
           actions: [
             ProfileButtonWidget(
               user: widget.user,
