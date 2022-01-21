@@ -1,3 +1,4 @@
+import 'package:brasil_data/core/exceptions/failed_exception.dart';
 import 'package:brasil_data/core/exceptions/user_exceptions.dart';
 import 'package:brasil_data/core/models/login_model.dart';
 import 'package:brasil_data/core/repositories/interface/repository.dart';
@@ -17,7 +18,7 @@ class UserRepository implements Repository<LoginModel> {
     } else if (!passwordCompare) {
       throw IncorrectPasswordException();
     } else {
-      throw Exception("Erro indefinido");
+      throw FailedException();
     }
   }
 }
