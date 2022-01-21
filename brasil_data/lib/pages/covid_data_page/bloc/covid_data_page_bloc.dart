@@ -11,6 +11,7 @@ import 'package:flutter/cupertino.dart';
 class CovidDataPageBloc extends Bloc {
   final _inputModel = CovidInputModel();
   final _service = CovidService();
+  String? _errorMsg;
   CovidResponseModel? _data;
   String? _state = "";
 
@@ -19,12 +20,16 @@ class CovidDataPageBloc extends Bloc {
         await _service.action(_inputModel);
 
     if (response.type == CovidResponseModel) {
+      _errorMsg = null;
       _data = response.value;
       sink.add(_data);
     } else {
-      print(response.value);
+      _errorMsg = response.value;
     }
+    sink.add(_errorMsg);
   }
+
+  String? get errorMsg => _errorMsg;
 
   int? get totalDepths => _total(FieldEnum.depths);
 

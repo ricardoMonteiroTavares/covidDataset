@@ -9,3 +9,8 @@ class BadRequestException implements Exception {
   @override
   String toString() => "Os campos ${fields.join(', ')} estão incorretos";
 }
+
+class NoInternetException implements Exception {
+  @override
+  String toString() => "Sem conexão!";
+}
