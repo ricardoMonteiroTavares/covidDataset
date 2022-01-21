@@ -32,66 +32,68 @@ class _LoginPageState extends State<LoginPage> {
           child: Center(
             child: Form(
               key: _bloc.formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    "assets/icons/logo_colored.png",
-                    width: 300,
-                  ),
-                  AlertErrorWidget(
-                    msg: _bloc.errorMsg,
-                    maxWidth: _width,
-                    minHeight: _height,
-                  ),
-                  _space,
-                  Container(
-                    constraints: BoxConstraints(maxWidth: _width),
-                    child: TextFormField(
-                      decoration: const InputDecoration(
-                        icon: Icon(Icons.alternate_email),
-                        labelText: "E-mail",
-                      ),
-                      onChanged: _bloc.setEmail,
-                      validator: FormValidator.validateEmail,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      "assets/icons/logo_colored.png",
+                      width: 300,
                     ),
-                  ),
-                  _space,
-                  Container(
-                    constraints: BoxConstraints(maxWidth: _width),
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        icon: const Icon(Icons.password),
-                        labelText: "Senha",
-                        suffixIcon: IconButton(
-                          icon: _bloc.icon,
-                          onPressed: _bloc.toggleHandler,
+                    AlertErrorWidget(
+                      msg: _bloc.errorMsg,
+                      maxWidth: _width,
+                      minHeight: _height,
+                    ),
+                    _space,
+                    Container(
+                      constraints: BoxConstraints(maxWidth: _width),
+                      child: TextFormField(
+                        decoration: const InputDecoration(
+                          icon: Icon(Icons.alternate_email),
+                          labelText: "E-mail",
                         ),
+                        onChanged: _bloc.setEmail,
+                        validator: FormValidator.validateEmail,
                       ),
-                      obscureText: _bloc.obscureText,
-                      onChanged: _bloc.setPassword,
-                      validator: FormValidator.validatePassword,
                     ),
-                  ),
-                  _space,
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: Size(_width, _height),
+                    _space,
+                    Container(
+                      constraints: BoxConstraints(maxWidth: _width),
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          icon: const Icon(Icons.password),
+                          labelText: "Senha",
+                          suffixIcon: IconButton(
+                            icon: _bloc.icon,
+                            onPressed: _bloc.toggleHandler,
+                          ),
+                        ),
+                        obscureText: _bloc.obscureText,
+                        onChanged: _bloc.setPassword,
+                        validator: FormValidator.validatePassword,
+                      ),
                     ),
-                    child: (_bloc.isLoading)
-                        ? const SizedBox(
-                            width: 20,
-                            height: 20,
-                            child: CircularProgressIndicator(
-                              color: Colors.white,
-                              strokeWidth: 1,
-                            ),
-                          )
-                        : const Text("Entrar"),
-                    onPressed: () => _bloc.signInHandler(context),
-                  )
-                ],
+                    _space,
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: Size(_width, _height),
+                      ),
+                      child: (_bloc.isLoading)
+                          ? const SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                                strokeWidth: 1,
+                              ),
+                            )
+                          : const Text("Entrar"),
+                      onPressed: () => _bloc.signInHandler(context),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
