@@ -9,7 +9,7 @@ Este projeto utiliza o framework Flutter, em sua versão 2.8.1 e o gerenciamento
 - `shared_preferences: ^2.0.12`
 
 # Como utiliza-lo?
-Basta acessar a nossa versão Web ou baixar e instalar a versão mobile.
+Basta acessar a nossa versão [Web](https://ricardomonteirotavares.github.io/covidDataset/) ou baixar e instalar a versão [mobile](https://github.com/ricardoMonteiroTavares/covidDataset/releases/tag/v1.0.0).
 
 Após o acesso é só colocar as seguintes credenciais.
 - E-mail: admin@brasildata.com
