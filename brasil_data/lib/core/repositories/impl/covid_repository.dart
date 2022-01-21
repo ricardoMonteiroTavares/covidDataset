@@ -35,7 +35,7 @@ class CovidRepository implements Repository<CovidInputModel> {
         default:
           throw FailedException();
       }
-    } on SocketException catch (e) {
+    } on SocketException catch (_) {
       throw NoInternetException();
     }
   }

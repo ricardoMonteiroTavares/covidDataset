@@ -8,7 +8,6 @@ import 'package:brasil_data/core/routes/app_routes.dart';
 import 'package:brasil_data/core/services/impl/covid_service.dart';
 import 'package:brasil_data/core/stateMagnement/bloc.dart';
 import 'package:brasil_data/core/util/or.dart';
-import 'package:brasil_data/core/widgets/date_picker.dart';
 import 'package:flutter/cupertino.dart';
 
 class CovidDataPageBloc extends Bloc with HasAndGetUser {
@@ -99,24 +98,5 @@ class CovidDataPageBloc extends Bloc with HasAndGetUser {
   void setState(String? newState) {
     _state = newState;
     sink.add(_state);
-  }
-
-  String get date => _inputModel.date ?? '';
-
-  Future<void> _setDate(String? newDate) async {
-    _inputModel.isLast = (newDate == null);
-    _inputModel.date = newDate;
-    sink.add(_inputModel);
-    await fetchData();
-  }
-
-  void datePickerHandler(BuildContext context) async {
-    DateTime selected = date.isEmpty ? DateTime.now() : DateTime.parse(date);
-    DateTime? response = await DatePicker.show(context, selected);
-    if (response == null) {
-      await _setDate(null);
-    } else if (selected != response) {
-      await _setDate(response.toString().split(" ").first);
-    }
   }
 }

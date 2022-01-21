@@ -3,17 +3,17 @@ import 'package:brasil_data/core/routes/route_generator.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const DCBrasil());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class DCBrasil extends StatelessWidget {
+  const DCBrasil({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Data Covid Brasil',
       theme: ThemeData(
         // This is the theme of your application.
         //

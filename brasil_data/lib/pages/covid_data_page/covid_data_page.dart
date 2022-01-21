@@ -1,6 +1,3 @@
-import 'package:brasil_data/core/models/user_model.dart';
-import 'package:brasil_data/core/routes/app_routes.dart';
-import 'package:brasil_data/core/util/or.dart';
 import 'package:brasil_data/core/util/states.dart';
 import 'package:brasil_data/core/widgets/data_card_widget.dart';
 import 'package:brasil_data/core/widgets/profile_button_widget.dart';

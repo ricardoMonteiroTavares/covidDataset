@@ -1,4 +1,3 @@
-import 'package:brasil_data/core/exceptions/failed_exception.dart';
 import 'package:brasil_data/core/mixins/mixin_operators.dart';
 import 'package:brasil_data/core/models/user_model.dart';
 import 'package:brasil_data/core/repositories/impl/local_repository.dart';
