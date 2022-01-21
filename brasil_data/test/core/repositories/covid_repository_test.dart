@@ -41,5 +41,10 @@ void main() {
       expect(response["next"], equals(null));
       expect(response["previous"], equals(null));
     });
+
+    test("6- Null Input Error", () {
+      expect(
+          () async => await repository.get(), throwsA(isA<NullThrownError>()));
+    });
   });
 }

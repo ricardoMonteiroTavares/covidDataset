@@ -24,5 +24,10 @@ void main() {
       expect(() async => await repository.get(model),
           throwsA(isA<IncorrectPasswordException>()));
     });
+
+    test("6- Null Input Error", () {
+      expect(
+          () async => await repository.get(), throwsA(isA<NullThrownError>()));
+    });
   });
 }
