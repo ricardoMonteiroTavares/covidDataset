@@ -1,19 +1,35 @@
 import 'package:brasil_data/core/enum/field_enum.dart';
+import 'package:brasil_data/core/mixins/has_get_user.dart';
 import 'package:brasil_data/core/models/covid_input_model.dart';
 import 'package:brasil_data/core/models/covid_registration_day_model.dart';
 import 'package:brasil_data/core/models/covid_response_model.dart';
+import 'package:brasil_data/core/models/user_model.dart';
+import 'package:brasil_data/core/routes/app_routes.dart';
 import 'package:brasil_data/core/services/impl/covid_service.dart';
 import 'package:brasil_data/core/stateMagnement/bloc.dart';
 import 'package:brasil_data/core/util/or.dart';
 import 'package:brasil_data/core/widgets/date_picker.dart';
 import 'package:flutter/cupertino.dart';
 
-class CovidDataPageBloc extends Bloc {
+class CovidDataPageBloc extends Bloc with HasAndGetUser {
   final _inputModel = CovidInputModel();
   final _service = CovidService();
+  UserModel? _user;
+
   String? _errorMsg;
   CovidResponseModel? _data;
   String? _state = "";
+
+  loadUser(BuildContext context) async {
+    if (await hasUser()) {
+      Or<UserModel, String> response = await getUser();
+      _user = response.value;
+      sink.add(user);
+    } else {
+      Navigator.pushNamedAndRemoveUntil(
+          context, AppRoutes.login, (route) => false);
+    }
+  }
 
   fetchData() async {
     Or<CovidResponseModel, String> response =
@@ -28,6 +44,8 @@ class CovidDataPageBloc extends Bloc {
     }
     sink.add(_errorMsg);
   }
+
+  UserModel? get user => _user;
 
   String? get errorMsg => _errorMsg;
 

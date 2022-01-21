@@ -1,4 +1,6 @@
 import 'package:brasil_data/core/models/user_model.dart';
+import 'package:brasil_data/core/routes/app_routes.dart';
+import 'package:brasil_data/core/util/or.dart';
 import 'package:brasil_data/core/util/states.dart';
 import 'package:brasil_data/core/widgets/data_card_widget.dart';
 import 'package:brasil_data/core/widgets/profile_button_widget.dart';
@@ -7,8 +9,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class CovidDataPage extends StatefulWidget {
-  final UserModel user;
-  const CovidDataPage({Key? key, required this.user}) : super(key: key);
+  const CovidDataPage({Key? key}) : super(key: key);
 
   @override
   _CovidDataPageState createState() => _CovidDataPageState();
@@ -16,138 +17,140 @@ class CovidDataPage extends StatefulWidget {
 
 class _CovidDataPageState extends State<CovidDataPage> {
   final _bloc = CovidDataPageBloc();
+
   final double aspectRatio = (kIsWeb) ? 3 : 2;
+
   @override
   void initState() {
+    _bloc.loadUser(context);
     _bloc.fetchData();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        title: const Text(
-          "PAINEL - DATA COVID BRASIL",
-          style: TextStyle(fontFamily: "Odibee Sans"),
+    return StreamBuilder(
+      stream: _bloc.stream,
+      builder: (context, snapshot) => Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          title: const Text(
+            "PAINEL - DATA COVID BRASIL",
+            style: TextStyle(fontFamily: "Odibee Sans"),
+          ),
+          actions: [
+            ProfileButtonWidget(
+              user: _bloc.user,
+            )
+          ],
         ),
-        actions: [
-          ProfileButtonWidget(
-            user: widget.user,
-          )
-        ],
-      ),
-      body: StreamBuilder(
-        stream: _bloc.stream,
-        builder: (context, snapshot) {
-          if (_bloc.errorMsg != null) {
-            return Container(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.cancel_rounded,
-                    color: Colors.red.shade800,
-                    size: 150,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    _bloc.errorMsg!,
-                    style: const TextStyle(fontSize: 18),
-                    textAlign: TextAlign.center,
-                  )
-                ],
-              ),
-            );
-          }
-          return ListView(
-            children: [
-              Container(
+        body: (_bloc.errorMsg != null)
+            ? Container(
                 padding: const EdgeInsets.all(20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Text(
-                      "Filtro por Estado:",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontFamily: "Odibee Sans",
-                      ),
+                    Icon(
+                      Icons.cancel_rounded,
+                      color: Colors.red.shade800,
+                      size: 150,
                     ),
                     const SizedBox(
-                      width: 5,
+                      height: 20,
                     ),
-                    SizedBox(
-                      height: 50,
-                      width: 100,
-                      child: DropdownButton<String>(
-                        value: _bloc.state,
-                        icon: const Icon(Icons.arrow_drop_down),
-                        isExpanded: true,
-                        elevation: 16,
-                        menuMaxHeight: 300,
-                        onChanged: _bloc.setState,
-                        items: states
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(
-                              value,
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontFamily: "Odibee Sans",
-                              ),
-                            ),
-                          );
-                        }).toList(),
-                      ),
-                    ),
+                    Text(
+                      _bloc.errorMsg!,
+                      style: const TextStyle(fontSize: 18),
+                      textAlign: TextAlign.center,
+                    )
                   ],
                 ),
-              ),
-              GridView.count(
-                shrinkWrap: true,
-                physics: const ScrollPhysics(),
-                padding: const EdgeInsets.all(10),
-                childAspectRatio: aspectRatio,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 2,
-                crossAxisCount:
-                    (kIsWeb && MediaQuery.of(context).size.width > 770) ? 2 : 1,
+              )
+            : ListView(
                 children: [
-                  DataCardWidget(
-                    title: "Total de Casos:",
-                    value: _bloc.totalCases,
-                    aspectRatio: aspectRatio,
-                    color: Colors.orange.shade700,
+                  Container(
+                    padding: const EdgeInsets.all(20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        const Text(
+                          "Filtro por Estado:",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontFamily: "Odibee Sans",
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        SizedBox(
+                          height: 50,
+                          width: 100,
+                          child: DropdownButton<String>(
+                            value: _bloc.state,
+                            icon: const Icon(Icons.arrow_drop_down),
+                            isExpanded: true,
+                            elevation: 16,
+                            menuMaxHeight: 300,
+                            onChanged: _bloc.setState,
+                            items: states
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(
+                                  value,
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontFamily: "Odibee Sans",
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  DataCardWidget(
-                    title: "Total de Mortes:",
-                    value: _bloc.totalDepths,
-                    aspectRatio: aspectRatio,
-                    color: Colors.red.shade800,
-                  ),
-                  DataCardWidget(
-                    title: "Casos por 100 mil habitantes:",
-                    value: _bloc.casesPer100k,
-                    aspectRatio: aspectRatio,
-                    color: Colors.amberAccent.shade700,
-                  ),
-                  DataCardWidget(
-                    title: "Mortes por 100 mil habitantes:",
-                    value: _bloc.depthPer100k,
-                    aspectRatio: aspectRatio,
+                  GridView.count(
+                    shrinkWrap: true,
+                    physics: const ScrollPhysics(),
+                    padding: const EdgeInsets.all(10),
+                    childAspectRatio: aspectRatio,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 2,
+                    crossAxisCount:
+                        (kIsWeb && MediaQuery.of(context).size.width > 770)
+                            ? 2
+                            : 1,
+                    children: [
+                      DataCardWidget(
+                        title: "Total de Casos:",
+                        value: _bloc.totalCases,
+                        aspectRatio: aspectRatio,
+                        color: Colors.orange.shade700,
+                      ),
+                      DataCardWidget(
+                        title: "Total de Mortes:",
+                        value: _bloc.totalDepths,
+                        aspectRatio: aspectRatio,
+                        color: Colors.red.shade800,
+                      ),
+                      DataCardWidget(
+                        title: "Casos por 100 mil habitantes:",
+                        value: _bloc.casesPer100k,
+                        aspectRatio: aspectRatio,
+                        color: Colors.amberAccent.shade700,
+                      ),
+                      DataCardWidget(
+                        title: "Mortes por 100 mil habitantes:",
+                        value: _bloc.depthPer100k,
+                        aspectRatio: aspectRatio,
+                      ),
+                    ],
                   ),
                 ],
               ),
-            ],
-          );
-        },
       ),
     );
   }

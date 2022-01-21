@@ -19,6 +19,20 @@ class _LoginPageState extends State<LoginPage> {
   );
   final _emailFocus = FocusNode();
   final _passwordFocus = FocusNode();
+  final _submitFocus = FocusNode();
+
+  hasUser() async {
+    if (await _bloc.hasUser()) {
+      _bloc.goToCovidDataPage(context);
+    }
+  }
+
+  @override
+  void initState() {
+    hasUser();
+    super.initState();
+  }
+
   @override
   void dispose() {
     _bloc.closeStream();
