@@ -1,5 +1,6 @@
 import 'package:brasil_data/core/exceptions/failed_exception.dart';
 import 'package:brasil_data/core/exceptions/internet_exceptions.dart';
+import 'package:brasil_data/core/mixins/mixin_operators.dart';
 import 'package:brasil_data/core/models/user_model.dart';
 import 'package:brasil_data/core/repositories/interface/repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
