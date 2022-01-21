@@ -36,6 +36,10 @@ class _LoginPageState extends State<LoginPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  Image.asset(
+                    "assets/icons/logo_colored.png",
+                    width: 300,
+                  ),
                   AlertErrorWidget(
                     msg: _bloc.errorMsg,
                     maxWidth: _width,
