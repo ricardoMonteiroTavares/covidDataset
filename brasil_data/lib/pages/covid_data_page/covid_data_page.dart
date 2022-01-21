@@ -92,7 +92,8 @@ class _CovidDataPageState extends State<CovidDataPage> {
               childAspectRatio: aspectRatio,
               crossAxisSpacing: 10,
               mainAxisSpacing: 2,
-              crossAxisCount: (kIsWeb) ? 2 : 1,
+              crossAxisCount:
+                  (kIsWeb && MediaQuery.of(context).size.width > 770) ? 2 : 1,
               children: [
                 DataCardWidget(
                   title: "Total de Casos:",
