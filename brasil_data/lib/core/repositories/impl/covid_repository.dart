@@ -9,7 +9,10 @@ import 'package:http/http.dart' as http;
 /// Repositório que busca os dados da Covid-19 no Brasil
 class CovidRepository implements Repository<CovidInputModel> {
   @override
-  Future<dynamic> get(CovidInputModel data) async {
+  Future<dynamic> get([CovidInputModel? data]) async {
+    if (data == null) {
+      throw NullThrownError();
+    }
     try {
       const String baseUrl =
           "https://api.brasil.io/v1/dataset/covid19/caso/data/";
@@ -34,5 +37,10 @@ class CovidRepository implements Repository<CovidInputModel> {
     } catch (e) {
       throw NoInternetException();
     }
+  }
+
+  @override
+  Future remove([CovidInputModel? data]) {
+    throw UnimplementedError();
   }
 }

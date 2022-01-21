@@ -1,0 +1,36 @@
+import 'package:brasil_data/core/models/user_model.dart';
+import 'package:brasil_data/core/repositories/interface/repository.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+/// Classe que realiza a comunicação com o banco de dados local
+class LocalRepository implements Repository<UserModel> {
+  @override
+  Future get([UserModel? data]) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? name, email, dateTime;
+    if ((name = prefs.getString("name")) == null) {
+      return null;
+    }
+    if ((email = prefs.getString("email")) == null) {
+      return null;
+    }
+    if ((dateTime = prefs.getString("dateTime")) == null) {
+      return null;
+    }
+
+    DateTime now = DateTime.now();
+    DateTime actual = DateTime.parse(dateTime!);
+    if (now.difference(actual).inHours >= 3) {
+      return null;
+    }
+    prefs.setString("dateTime", now.toString());
+    return UserModel(email: email, name: name);
+  }
+
+  @override
+  Future<bool> remove([UserModel? data]) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    return await prefs.clear();
+  }
+}
