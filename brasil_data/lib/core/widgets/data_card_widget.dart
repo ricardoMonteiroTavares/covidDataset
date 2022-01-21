@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart' as intl;
 
 class DataCardWidget extends StatelessWidget {
   final String title;
@@ -23,17 +24,26 @@ class DataCardWidget extends StatelessWidget {
           children: [
             Row(
               children: [
-                Text(title, style: TextStyle(fontSize: 17, color: color))
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontFamily: "Odibee Sans",
+                    color: color,
+                  ),
+                )
               ],
             ),
             (value == null)
                 ? CircularProgressIndicator(color: color)
                 : Text(
-                    value.toString(),
+                    intl.NumberFormat.decimalPattern('pt-BR').format(value),
                     style: TextStyle(
-                        fontSize: 50,
-                        color: color,
-                        fontWeight: FontWeight.bold),
+                      fontSize: 50,
+                      color: color,
+                      fontFamily: "Odibee Sans",
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
             SizedBox(
               height: aspectRatio * 5,

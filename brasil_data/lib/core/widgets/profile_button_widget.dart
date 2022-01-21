@@ -13,7 +13,10 @@ class ProfileButtonWidget extends StatelessWidget {
         children: [
           Text(
             user.name ?? '',
-            style: const TextStyle(fontWeight: FontWeight.bold),
+            style: const TextStyle(
+              fontSize: 20,
+              fontFamily: "Odibee Sans",
+            ),
           ),
           Text(user.email ?? '')
         ],
@@ -50,6 +53,10 @@ class ProfileButtonWidget extends StatelessWidget {
             value: 0,
             child: Text(
               "Sair",
+              style: TextStyle(
+                fontSize: 20,
+                fontFamily: "Odibee Sans",
+              ),
             ),
           )
         ];

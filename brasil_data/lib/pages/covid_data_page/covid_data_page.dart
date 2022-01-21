@@ -47,7 +47,13 @@ class _CovidDataPageState extends State<CovidDataPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  const Text("Filtro por Estado: "),
+                  const Text(
+                    "Filtro por Estado:",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontFamily: "Odibee Sans",
+                    ),
+                  ),
                   const SizedBox(
                     width: 5,
                   ),
@@ -65,7 +71,13 @@ class _CovidDataPageState extends State<CovidDataPage> {
                           states.map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
-                          child: Text(value),
+                          child: Text(
+                            value,
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontFamily: "Odibee Sans",
+                            ),
+                          ),
                         );
                       }).toList(),
                     ),
