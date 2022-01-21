@@ -24,9 +24,4 @@ class UserRepository implements Repository<LoginModel> {
       throw FailedException();
     }
   }
-
-  @override
-  Future remove([LoginModel? data]) {
-    throw UnimplementedError();
-  }
 }
