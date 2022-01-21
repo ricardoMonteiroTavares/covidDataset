@@ -27,12 +27,7 @@ class LocalService with RemoveAllOp implements Service<UserModel?, UserModel> {
   }
 
   @override
-  Future<Or<bool, String>> removeAll() async {
-    bool response = await repository.removeAll();
-    if (response) {
-      return Or<bool, String>(true);
-    } else {
-      return Or<bool, String>(FailedException().toString());
-    }
+  Future<bool> removeAll() async {
+    return await repository.removeAll();
   }
 }

@@ -7,15 +7,16 @@ import 'package:test/test.dart';
 void main() {
   group("LocalRepository: ", () {
     LocalRepository repository = LocalRepository();
+    repository.removeAll();
     test("1- Buscando dados não existentes", () async {
       expect(() async => await repository.get(),
           throwsA(isA<NotFoundException>()));
     });
 
     UserModel modelTest = UserModel(email: "abacaxi@a.com", name: "Eterovaldo");
-    test("2- Adicionando valores", () {
-      expect(() async => await repository.set(modelTest),
-          isNot(throwsA(isA<FailedException>())));
+    test("2- Adicionando valores", () async {
+      dynamic response = await repository.set(modelTest);
+      expect(response, equals(null));
     });
     test("3- Buscando valores válidos", () async {
       UserModel response = await repository.get(modelTest);
@@ -30,7 +31,7 @@ void main() {
 
     test("4- Limapndo valores inexistentes", () async {
       bool response = await repository.removeAll();
-      expect(response, equals(false));
+      expect(response, equals(true));
     });
   });
 }

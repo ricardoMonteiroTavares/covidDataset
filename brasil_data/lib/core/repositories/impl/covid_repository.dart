@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:brasil_data/core/exceptions/failed_exception.dart';
 import 'package:brasil_data/core/exceptions/internet_exceptions.dart';
@@ -34,7 +35,7 @@ class CovidRepository implements Repository<CovidInputModel> {
         default:
           throw FailedException();
       }
-    } catch (e) {
+    } on SocketException catch (e) {
       throw NoInternetException();
     }
   }

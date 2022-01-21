@@ -1,7 +1,6 @@
 import 'package:brasil_data/core/exceptions/failed_exception.dart';
 import 'package:brasil_data/core/exceptions/internet_exceptions.dart';
 import 'package:brasil_data/core/models/user_model.dart';
-import 'package:brasil_data/core/repositories/impl/local_repository.dart';
 import 'package:brasil_data/core/services/impl/local_service.dart';
 import 'package:brasil_data/core/util/or.dart';
 import 'package:test/test.dart';
@@ -9,6 +8,7 @@ import 'package:test/test.dart';
 void main() {
   group("LocalService: ", () {
     LocalService service = LocalService();
+    service.removeAll();
     test("1- Buscando dados não existentes", () async {
       Or<UserModel, String> response = await service.action(null);
       expect(response.type, equals(String));
@@ -33,17 +33,15 @@ void main() {
     });
 
     test("4- Limapndo valores existentes", () async {
-      Or<bool, String> response = await service.removeAll();
-      expect(response.type, equals(bool));
-      bool val = response.value;
-      expect(val, equals(true));
+      bool response = await service.removeAll();
+
+      expect(response, equals(true));
     });
 
     test("4- Limapndo valores inexistentes", () async {
-      Or<bool, String> response = await service.removeAll();
-      expect(response.type, equals(String));
-      String val = response.value;
-      expect(val, equals(NotFoundException().toString()));
+      bool response = await service.removeAll();
+
+      expect(response, equals(true));
     });
   });
 }
