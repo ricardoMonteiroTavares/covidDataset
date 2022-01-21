@@ -1,4 +1,3 @@
-import 'package:brasil_data/core/models/user_model.dart';
 import 'package:brasil_data/core/routes/app_routes.dart';
 import 'package:brasil_data/pages/covid_data_page/covid_data_page.dart';
 import 'package:brasil_data/pages/login_page/login_page.dart';

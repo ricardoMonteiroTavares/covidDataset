@@ -2,7 +2,6 @@ import 'package:brasil_data/core/validators/form_validator.dart';
 import 'package:brasil_data/core/widgets/alert_error_widget.dart';
 import 'package:brasil_data/pages/login_page/bloc/login_page_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
