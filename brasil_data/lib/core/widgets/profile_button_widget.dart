@@ -13,7 +13,10 @@ class ProfileButtonWidget extends StatelessWidget {
         children: [
           Text(
             user.name ?? '',
-            style: const TextStyle(fontWeight: FontWeight.bold),
+            style: const TextStyle(
+              fontSize: 20,
+              fontFamily: "Odibee Sans",
+            ),
           ),
           Text(user.email ?? '')
         ],
@@ -21,12 +24,13 @@ class ProfileButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool flag = kIsWeb && MediaQuery.of(context).size.width > 770;
     return PopupMenuButton(
       offset: const Offset(0, kToolbarHeight),
       child: ConstrainedBox(
         constraints: const BoxConstraints(
             minWidth: 50, maxWidth: 250, maxHeight: kToolbarHeight),
-        child: (kIsWeb)
+        child: (flag)
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -50,10 +54,14 @@ class ProfileButtonWidget extends StatelessWidget {
             value: 0,
             child: Text(
               "Sair",
+              style: TextStyle(
+                fontSize: 20,
+                fontFamily: "Odibee Sans",
+              ),
             ),
           )
         ];
-        if (!kIsWeb) {
+        if (!flag) {
           list.insertAll(0, [
             PopupMenuItem(
               value: -1,

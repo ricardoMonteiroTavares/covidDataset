@@ -47,7 +47,13 @@ class _CovidDataPageState extends State<CovidDataPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  const Text("Filtro por Estado: "),
+                  const Text(
+                    "Filtro por Estado:",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontFamily: "Odibee Sans",
+                    ),
+                  ),
                   const SizedBox(
                     width: 5,
                   ),
@@ -65,7 +71,13 @@ class _CovidDataPageState extends State<CovidDataPage> {
                           states.map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
-                          child: Text(value),
+                          child: Text(
+                            value,
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontFamily: "Odibee Sans",
+                            ),
+                          ),
                         );
                       }).toList(),
                     ),
@@ -80,7 +92,8 @@ class _CovidDataPageState extends State<CovidDataPage> {
               childAspectRatio: aspectRatio,
               crossAxisSpacing: 10,
               mainAxisSpacing: 2,
-              crossAxisCount: (kIsWeb) ? 2 : 1,
+              crossAxisCount:
+                  (kIsWeb && MediaQuery.of(context).size.width > 770) ? 2 : 1,
               children: [
                 DataCardWidget(
                   title: "Total de Casos:",
