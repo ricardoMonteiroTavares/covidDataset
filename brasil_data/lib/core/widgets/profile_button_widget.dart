@@ -1,26 +1,29 @@
+import 'package:brasil_data/core/mixins/clear_user.dart';
 import 'package:brasil_data/core/models/user_model.dart';
 import 'package:brasil_data/core/routes/app_routes.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class ProfileButtonWidget extends StatelessWidget {
-  final UserModel user;
+class ProfileButtonWidget extends StatelessWidget with ClearUser {
+  final UserModel? user;
   const ProfileButtonWidget({Key? key, required this.user}) : super(key: key);
 
-  Column getUserColumn(UserModel user) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            user.name ?? '',
-            style: const TextStyle(
-              fontSize: 20,
-              fontFamily: "Odibee Sans",
+  Widget getUserColumn(UserModel? user) => (user == null)
+      ? const CircularProgressIndicator()
+      : Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              user.name ?? '',
+              style: const TextStyle(
+                fontSize: 20,
+                fontFamily: "Odibee Sans",
+              ),
             ),
-          ),
-          Text(user.email ?? '')
-        ],
-      );
+            Text(user.email ?? '')
+          ],
+        );
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +47,7 @@ class ProfileButtonWidget extends StatelessWidget {
       ),
       onSelected: (value) {
         if (value == 0) {
+          clearUser();
           Navigator.pushNamedAndRemoveUntil(
               context, AppRoutes.login, (route) => false);
         }

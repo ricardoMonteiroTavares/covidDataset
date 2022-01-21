@@ -10,12 +10,7 @@ class RouteGenerator {
       case AppRoutes.login:
         return buildRoute(const LoginPage(), settings: settings);
       case AppRoutes.covidDataPage:
-        final arguments = settings.arguments;
-        if (arguments == null) {
-          return buildRoute(const LoginPage(), settings: settings);
-        }
-        return buildRoute(CovidDataPage(user: arguments as UserModel),
-            settings: settings);
+        return buildRoute(const CovidDataPage(), settings: settings);
 
       default:
         return _errorRoute();

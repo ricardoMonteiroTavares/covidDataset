@@ -37,6 +37,7 @@ dependencies:
   http: ^0.13.4
   test: ^1.17.12
   intl: ^0.17.0
+  shared_preferences: ^2.0.12
 
 
 dev_dependencies:

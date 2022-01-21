@@ -6,7 +6,10 @@ import 'package:brasil_data/core/repositories/interface/repository.dart';
 /// Repositório que busca os dados dos usuários
 class UserRepository implements Repository<LoginModel> {
   @override
-  Future get(LoginModel data) async {
+  Future get([LoginModel? data]) async {
+    if (data == null) {
+      throw NullThrownError();
+    }
     bool emailCompare = data.email == "admin@brasildata.com";
     bool passwordCompare = data.password == "admin1234";
 
